@@ -37,14 +37,14 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <Button
-                android:id="@+id/button1"
+                android:id="@+id/binus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="BINUS Bandung" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/braga"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -63,14 +63,14 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <Button
-                android:id="@+id/button3"
+                android:id="@+id/alun"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Alun-Alun" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/gazibu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

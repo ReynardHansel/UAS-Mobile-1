@@ -3,6 +3,8 @@ package com.example.uas_1;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,6 +18,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+    private LatLng location; //*--> utk dynamically store chosen location
+
+    private final LatLng binus = new LatLng(-6.9153653, 107.5886954);
+    private final LatLng braga = new LatLng(-6.9178283, 107.6045685);
+    private final LatLng alun = new LatLng(-6.9218295, 107.6021967);
+    private final LatLng gazibu = new LatLng(-6.9002779, 107.6161296);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,28 +32,65 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        //* Button setup
+        Button buttonBinus = findViewById(R.id.binus);
+        buttonBinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location = binus;
+                moveCameraToLocation();
+            }
+        });
+        Button buttonBraga = findViewById(R.id.braga);
+        buttonBraga.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location = braga;
+                moveCameraToLocation();
+            }
+        });
+        Button buttonAlun = findViewById(R.id.alun);
+        buttonAlun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location = alun;
+                moveCameraToLocation();
+            }
+        });
+        Button buttonGazibu = findViewById(R.id.gazibu);
+        buttonGazibu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location = gazibu;
+                moveCameraToLocation();
+            }
+        });
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng braga = new LatLng(-6.9193, 107.6082);
-        mMap.addMarker(new MarkerOptions().position(braga).title("Marker in Braga"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(braga, 17f));
+        // Markers
+        mMap.addMarker(new MarkerOptions().position(binus).title("BINUS Bandung"));
+        mMap.addMarker(new MarkerOptions().position(braga).title("Braga"));
+        mMap.addMarker(new MarkerOptions().position(alun).title("Alun-Alun Kota Bandung"));
+        mMap.addMarker(new MarkerOptions().position(gazibu).title("Lapangan Gazibu"));
+
+        // Default camera location
+        location = binus;
+        moveCameraToLocation();
+    }
+
+    // untuk make sure location + map nya not null sebelum move camera
+    private void moveCameraToLocation() {
+        if (location != null && mMap != null) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 17f));
+        }
     }
 }
